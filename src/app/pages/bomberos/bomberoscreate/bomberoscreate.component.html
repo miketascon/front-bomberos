@@ -1,0 +1,192 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class=container>
+
+
+
+    <p-panel header="NUEVO CASO - INFORMACIÓN BASICA DEL REPORTE">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="fecha">Fecha:</label>
+                </div>
+                <div class="ui-g-3">
+                    <p-calendar [(ngModel)]="fecha" [monthNavigator]="true" [yearNavigator]="true" yearRange="1920:2050" [showIcon]="true"></p-calendar>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Hora:</label>
+                </div>
+                <div class="ui-g-3">
+                    <p-calendar [(ngModel)]="hora" [timeOnly]="true"></p-calendar>
+                </div>
+            </div>
+
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="tipoLlamada">Tipo de llamado:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="tipoLlamada" [(ngModel)]="incidente.tipoLlamada" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-3">
+                    <label for="tipoIncidente">Tipo de incidente:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="tipoIncidente" [(ngModel)]="incidente.tipoIncidente" maxlength="100" autofocus />
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="direccion">Direccion:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="direccion" [(ngModel)]="incidente.direccion" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-3">
+                    <label for="barrioComuna">Barrio / Comuna:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="barrioComuna" [(ngModel)]="incidente.barrioComuna" maxlength="100" autofocus />
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="zona">Zona:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="zona" [(ngModel)]="incidente.zona" maxlength="100" autofocus />
+                </div>
+
+            </div>
+        </div>
+    </p-panel>
+    <br>
+
+
+    <p-panel header="INFORMACIÓN DE QUIEN REPORTA">
+
+
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="institucionInforma">Institución que informa:</label>
+                </div>
+                <div class="ui-g-6">
+                    <input pInputText id="institucionInforma" [(ngModel)]="incidente.institucionInforma" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-3">
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="nombres">Nombres:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="nombres" maxlength="100" autofocus [(ngModel)]="incidente.nombres" (ngModelChange)="incidente.nombres = $event.toUpperCase()" />
+                </div>
+                <div class="ui-g-3">
+                    <label for="apellidos">Apellidos:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="apellidos" maxlength="100" autofocus [(ngModel)]="incidente.apellidos" (ngModelChange)="incidente.apellidos = $event.toUpperCase()" />
+                </div>
+            </div>
+
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="cedula">Documento:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="cedula" maxlength="100" autofocus [(ngModel)]="incidente.cedula" />
+                </div>
+                <div class="ui-g-3">
+                    <label for="ciudadExpedicion">Ciudad de expedición:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="ciudadExpedicion" maxlength="100" autofocus [(ngModel)]="incidente.ciudadExpedicion" (ngModelChange)="incidente.ciudadExpedicion = $event.toUpperCase()" />
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="celTel">Celular / Teléfono:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="celTel" maxlength="100" autofocus [(ngModel)]="incidente.celTel" />
+                </div>
+                <div class="ui-g-3">
+                    <label for="otroMetodo">Otro medio:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="otroMetodo" maxlength="100" autofocus [(ngModel)]="incidente.otroMetodo" (ngModelChange)="incidente.otroMetodo = $event.toUpperCase()" />
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </p-panel>
+
+
+    <p-panel>
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="guardiaTurno">Guardia de turno:</label>
+                </div>
+                <div class="ui-g-6">
+                    <input pInputText id="guardiaTurno" [(ngModel)]="incidente.guardiaTurno" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-3">
+
+                </div>
+
+            </div>
+
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="nombresGuardia">Nombres:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="nombresGuardia" maxlength="100" autofocus [(ngModel)]="incidente.nombresGuardia" (ngModelChange)="incidente.nombresGuardia = $event.toUpperCase()" />
+                </div>
+                <div class="ui-g-3">
+                    <label for="apellidosGuardia">Apellidos:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="apellidosGuardia" maxlength="100" autofocus [(ngModel)]="incidente.apellidosGuardia" (ngModelChange)="incidente.apellidosGuardia = $event.toUpperCase()" />
+                </div>
+            </div>
+
+
+            <div class="ui-g-12">
+
+                <br>
+                <br>
+                <div Class="ui-g-2">
+                    <button type="button" pButton (click)="guardar()" label="Guardar"></button>
+                </div>
+                <div Class="ui-g-2">
+                    <button type="button" routerLink="/pages/incidentes/lista" pButton class="ui-button-danger" label="volver"></button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </p-panel>
+
+
+</div>

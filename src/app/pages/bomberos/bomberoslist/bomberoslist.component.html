@@ -1,0 +1,63 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class="container">
+    <p-table #dt filter="true" filterDelay="500" [value]="casos" [columns]="cols" [scrollable]="true" selectionMode="single" [(selection)]="selectedbombs" [paginator]="true" [rows]="10" [(contextMenuSelection)]="selectedbombs" [contextMenu]="cm">
+
+        <ng-template pTemplate="caption">
+            Lista de incidentes
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" style="width:250px">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                    <input *ngSwitchCase="'reporte'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'fecha'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'hora'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'tipoIncidente'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'tipoLlamada'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'direccion'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'barrioComuna'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'sgdoNombre'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'zona'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+
+
+
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+
+
+            <div style="text-align:left">
+                <button pButton type="button" icon="pi pi-plus" routerLink="/pages/incidentes/crear" style="margin-right: 0.5em;"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportAsXLSX()" style="margin-right: 0.5em;" class="ui-button-success"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL FILTRADO" (click)="exportAsXLSXFilter(dt)" style="margin-right: 0.5em;" class="ui-button-success"></button>
+            </div>
+
+
+        </ng-template>
+
+    </p-table>
+    <p-contextMenu #cm [model]="items"></p-contextMenu>
+</div>

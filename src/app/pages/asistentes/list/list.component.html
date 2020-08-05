@@ -1,0 +1,129 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class="container">
+    <p-panel header="INFORMACIÓN BASE DEL REPORTE">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="fecha">Fecha: {{incidente.fecha}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Hora: {{incidente.hora}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Reporte #: {{incidente.reporte}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Tipo de incidente: {{incidente.tipoIncidente}}</label>
+                </div>
+            </div>
+
+        </div>
+    </p-panel>
+    <br>
+
+
+    <p-table #dt filter="true" filterDelay="500" [columns]="cols" [scrollable]="true" [value]="asistentes" selectionMode="single" [(selection)]="selectedPersonal" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" style="width:250px">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <input *ngSwitchCase="'interno'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'reporte'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'nombres'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'apellidos'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'asisteComo'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" style="margin-right: 0.5em;"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportAsXLSX()" style="margin-right: 0.5em;" class="ui-button-success"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL FILTRADO" (click)="exportAsXLSXFilter(dt)" style="margin-right: 0.5em;" class="ui-button-success"></button>
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="DATOS DE UNIDAD ASISTENTE" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '900px'}">
+        <div class=" ui-fluid" *ngIf="personal">
+
+            <div class="ui-g-12">
+                <div class="ui-g-1">
+                    <label for="vin">Asiste como:</label>
+                </div>
+                <div class="ui-g-3">
+                    <p-dropdown [options]="respuesta" [(ngModel)]="personal.asisteComo"></p-dropdown>
+                </div>
+                <div class="ui-g-1">
+                    <label for="vin">Asistente:</label>
+                </div>
+
+                <div class="ui-g-7">
+                    <p-dropdown [options]="asistente" optionLabel="completo" [showClear]="true" [(ngModel)]="selectAsistente" (ngModelChange)="cambiarAsistente()"></p-dropdown>
+                </div>
+
+
+            </div>
+
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="rango">Rango:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="rango" [(ngModel)]="personal.rango" autofocus />
+                </div>
+                <div class="ui-g-3">
+                    <label for="interno">Interno:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="interno" [(ngModel)]="personal.interno" autofocus />
+                </div>
+
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="nombres">Nombres:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="nombres" [(ngModel)]="personal.nombres" autofocus />
+                </div>
+                <div class="ui-g-3">
+                    <label for="apellidos">Apellidos:</label>
+                </div>
+                <div class="ui-g-3">
+                    <input pInputText id="apellidos" [(ngModel)]="personal.apellidos" autofocus />
+                </div>
+
+            </div>
+
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Eliminar"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Guardar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

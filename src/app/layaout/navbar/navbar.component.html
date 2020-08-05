@@ -1,0 +1,81 @@
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/pages/home">Módulo Bomberos</a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fa fa-bars"></i></button>
+    <!-- Navbar Search
+    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>-->
+
+    <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+        <a class="navbar-brand" data-toggle="modal" data-target="#passwordModal">{{authService.getCurrentUser().nom | uppercase}}</a>
+    </div>
+    <!-- Navbar-->
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                <!-- <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="#">Activity Log</a> -->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="confirm()">Cerrar sesión</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+<p-confirmDialog header="Confirmación" acceptLabel="Si" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+
+
+<div class="modal" id="passwordModal">
+    <p-toast [style]="{marginTop: '80px'}" position="top-center" key="tr"></p-toast>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-center">
+                <h5 class="modal-title" style="color: white ">Cambiar contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <div class="ui-g-4">
+                            <label for="actualpass">Contraseña actual:</label>
+                        </div>
+                        <div class="ui-g-6">
+                            <input pInputText type="password" id="actualpass" name="actualpass" [(ngModel)]="actualpass" maxlength="30" autofocus />
+                        </div>
+                    </div>
+                    <div class="ui-g-12">
+                        <div class="ui-g-4">
+                            <label for="nuevapass">Contraseña nueva:</label>
+                        </div>
+                        <div class="ui-g-6">
+                            <input pInputText type="password" id="nuevapass" name="nuevapass" [(ngModel)]="nuevapass" maxlength="30" autofocus />
+                        </div>
+                    </div>
+                    <div class="ui-g-12">
+                        <div class="ui-g-4">
+                            <label for="confirmarpass">Repetir contraseña:</label>
+                        </div>
+                        <div class="ui-g-6">
+                            <input pInputText type="password" id="confirmarpass" name="confirmarpass" [(ngModel)]="confirmarpass" maxlength="30" autofocus />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" [disabled]="!confirmarpass" (click)="updatePassword()" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

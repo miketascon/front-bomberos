@@ -1,0 +1,67 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class="container">
+    <p-table #dt filter="true" filterDelay="500" [columns]="cols" [value]="ambulancias" selectionMode="single" [(selection)]="selectedAmbulancias" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                    <input *ngSwitchCase="'maquina'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'tipo'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <input *ngSwitchCase="'placa'" placeholder="Filtrar" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" style="margin-right: 0.5em;"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportAsXLSX()" style="margin-right: 0.5em;" class="ui-button-success"></button>
+                <button type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL FILTRADO" (click)="exportAsXLSXFilter(dt)" style="margin-right: 0.5em;" class="ui-button-success"></button>
+            </div>
+        </ng-template>
+    </p-table>
+
+    <p-dialog header="Ambulancia" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" showEffect="fade" [modal]="true" [style]="{width: '300px'}">
+        <div class="p-grid ui-fluid" *ngIf="ambulancia">
+            <div class="p-col-4">
+                <label for="vin">Maquina</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="vin" [(ngModel)]="ambulancia.maquina" autofocus />
+            </div>
+            <div class="p-col-4">
+                <label for="year">Tipo</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="year" [(ngModel)]="ambulancia.tipo" />
+            </div>
+            <div class="p-col-4">
+                <label for="brand">Placa</label>
+            </div>
+            <div class="p-col-8">
+                <input pInputText id="brand" [(ngModel)]="ambulancia.placa" />
+            </div>
+        </div>
+        <p-footer>
+            <div class="ui-dialog-buttonpane ui-helper-clearfix">
+                <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Eliminar"></button>
+                <button type="button" pButton icon="pi pi-check" (click)="save()" label="Guardar"></button>
+            </div>
+        </p-footer>
+    </p-dialog>
+</div>

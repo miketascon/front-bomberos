@@ -1,0 +1,98 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class=container>
+
+
+
+    <p-panel header="INFORMACIÓN BASE DEL REPORTE">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="fecha">Fecha: {{incidente.fecha}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Hora: {{incidente.hora}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Reporte #: {{incidente.reporte}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Tipo de incidente: {{incidente.tipoIncidente}}</label>
+                </div>
+            </div>
+
+
+
+        </div>
+    </p-panel>
+    <br>
+
+
+    <p-panel header="COMPLEMENTARIOS DEL REPORTE">
+
+
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-g-12">
+                <div class="ui-g-6">
+                    <label for="descripcion">Descripción breve del incidente:</label>
+                </div>
+                <div class="ui-g-6">
+                    <textarea pInputTextarea name="descripcion" [(ngModel)]="incidente.descripcion" (ngModelChange)="incidente.descripcion = $event.toUpperCase()"></textarea>
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-6">
+                    <label for="procedimiento">Procedimiento realizado:</label>
+                </div>
+                <div class="ui-g-6">
+                    <textarea pInputTextarea name="procedimiento" [(ngModel)]="incidente.procedimiento" (ngModelChange)="incidente.procedimiento = $event.toUpperCase()"></textarea>
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-6">
+                    <label for="observaciones">Observaciones generales:</label>
+                </div>
+                <div class="ui-g-6">
+                    <textarea pInputTextarea name="observaciones" [(ngModel)]="incidente.observaciones" (ngModelChange)="incidente.observaciones = $event.toUpperCase()"></textarea>
+                </div>
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-6">
+                    <label for="observaciones">Otras entidades intervinientes en el incidente:</label>
+                </div>
+                <div class="ui-g-6">
+                    <textarea pInputTextarea name="observaciones" [(ngModel)]="incidente.otrasEntidades" (ngModelChange)="incidente.otrasEntidades = $event.toUpperCase()"></textarea>
+                </div>
+            </div>
+
+
+
+
+            <div class="ui-g-12">
+
+                <br>
+                <br>
+                <div Class="ui-g-2">
+                    <button type="button" pButton (click)="guardar()" label="Guardar"></button>
+                </div>
+                <div Class="ui-g-2">
+                    <button type="button" routerLink="/pages/incidentes/lista" pButton class="ui-button-danger" label="volver"></button>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </p-panel>
+
+
+
+
+</div>

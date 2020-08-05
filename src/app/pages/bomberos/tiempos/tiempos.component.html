@@ -1,0 +1,168 @@
+<br>
+<br>
+<p-toast [style]="{marginTop: '80px'}" position="top-right" key="tl"></p-toast>
+<div class=container>
+
+
+
+    <p-panel header="INFORMACIÓN BASE DEL REPORTE">
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="fecha">Fecha: {{incidente.fecha}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Hora: {{incidente.hora}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Reporte #: {{incidente.reporte}}</label>
+                </div>
+                <div class="ui-g-3">
+                    <label for="hora">Tipo de incidente: {{incidente.tipoIncidente}}</label>
+                </div>
+            </div>
+
+
+
+        </div>
+    </p-panel>
+    <br>
+
+
+    <p-panel header="INFORMACIÓN VEHICULO DESPACHADO">
+
+
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-6">
+                <label for="vehiculo">Maquina # : {{incidente.maquina}} {{incidente.tipo}}</label>
+
+            </div>
+            <div class="ui-g-6">
+                <p-autoComplete [(ngModel)]="maquinaAsiganada" [suggestions]="filteredAmbulanciaSingle" (completeMethod)="filterSingle($event)" *ngIf="incidente.maquina === undefined" field="maquina" [size]="30" placeholder="" [minLength]="1"></p-autoComplete>
+            </div>
+
+        </div>
+    </p-panel>
+
+    <p-panel header="TIEMPOS ACTUALES" *ngIf="incidente.regreso !== undefined">
+
+        <div class="ui-g ui-fluid">
+            <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="vehiculo">Salida: {{incidente.salida}}</label>
+
+                </div>
+                <div class="ui-g-3">
+                    <label for="vehiculo">En sitio: {{incidente.enSitio}}</label>
+                </div>
+
+                <div class="ui-g-3">
+                    <label for="vehiculo">Termino labor: {{incidente.terminoLabor}}</label>
+
+                </div>
+                <div class="ui-g-3">
+                    <label for="vehiculo">Regreso: {{incidente.regreso}}</label>
+                </div>
+
+            </div>
+
+            <!--   <div class="ui-g-12">
+                <div class="ui-g-3">
+                    <label for="vehiculo">Respuesta: {{incidente.respuesta}}</label>
+
+                </div>
+                <div class="ui-g-3">
+                    <label for="vehiculo">Maniobra: {{incidente.maniobra}}</label>
+                </div>
+
+                <div class="ui-g-3">
+                    <label for="vehiculo">Retorno: {{incidente.retorno}}</label>
+
+                </div>
+                <div class="ui-g-3">
+                    <label for="vehiculo">Total minutos: {{incidente.totalMinutos}}</label>
+                </div>
+
+            </div> -->
+
+
+        </div>
+    </p-panel>
+
+
+    <p-panel header="TIEMPO DE ACTUACIÓN">
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-g-12">
+                <div class="ui-g-1">
+                    <label for="salida">Salida:</label>
+                </div>
+                <div class="ui-g-2">
+                    <p-calendar [(ngModel)]="salida" [timeOnly]="true"></p-calendar>
+                </div>
+                <div class="ui-g-1">
+                    <label for="enSitio">En el sitio:</label>
+                </div>
+                <div class="ui-g-2">
+                    <p-calendar [timeOnly]="true" [(ngModel)]="enSitio" (ngModelChange)="setRespuesta()"></p-calendar>
+                </div>
+
+                <div class="ui-g-1">
+                    <label for="terminoLabor">Termino labor:</label>
+                </div>
+                <div class="ui-g-2">
+                    <p-calendar [timeOnly]="true" [(ngModel)]="terminoLabor" (ngModelChange)="setManiobra()"></p-calendar>
+                </div>
+                <div class="ui-g-1">
+                    <label for="regreso">Regreso:</label>
+                </div>
+                <div class="ui-g-2">
+                    <p-calendar [timeOnly]="true" [(ngModel)]="regreso" (ngModelChange)="setRetorno()"></p-calendar>
+                </div>
+
+            </div>
+
+            <div class="ui-g-12">
+                <div class="ui-g-1">
+                    <label for="salida">Respuesta:</label>
+                </div>
+                <div class="ui-g-2">
+                    <input pInputText id="respuesta" [(ngModel)]="incidente.respuesta" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-1">
+                    <label for="enSitio">Maniobra:</label>
+                </div>
+                <div class="ui-g-2">
+                    <input pInputText id="maniobra" [(ngModel)]="incidente.maniobra" maxlength="100" autofocus />
+                </div>
+
+                <div class="ui-g-1">
+                    <label for="terminoLabor">retorno:</label>
+                </div>
+                <div class="ui-g-2">
+                    <input pInputText id="retorno" [(ngModel)]="incidente.retorno" maxlength="100" autofocus />
+                </div>
+                <div class="ui-g-1">
+                    <label for="regreso">Total minutos:</label>
+                </div>
+                <div class="ui-g-2">
+                    <input pInputText id="totalMinutos" [(ngModel)]="incidente.totalMinutos" maxlength="100" autofocus />
+                </div>
+
+            </div>
+
+
+            <div class="ui-g-12">
+                <br>
+                <br>
+                <div Class="ui-g-2">
+                    <button type="button" pButton (click)="guardar()" label="Guardar"></button>
+                </div>
+                <div Class="ui-g-2">
+                    <button type="button" routerLink="/pages/incidentes/lista" pButton class="ui-button-danger" label="volver"></button>
+                </div>
+
+            </div>
+        </div>
+    </p-panel>
+</div>

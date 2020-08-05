@@ -1,0 +1,49 @@
+<p-toast [style]="{marginTop: '80px'}" position="top-center" key="tc"></p-toast>
+
+<img src="assets\images\carro.png" class="img-fluid">
+
+<div style="display:flex; align-items:center; justify-content:center; height:100%; padding-top: 5em">
+    <p-panel header="Módulo bomberos" [style]="{'text-align':'center',
+                                               'text-color': 'blue !important'}">
+
+        <img src="/assets/images/user.png" alt="Logotipo de HTML5" width="100" height="100">
+        <form [formGroup]="form">
+
+            <div style="padding-top : 20px">
+                <span class="ui-float-label">
+                    <input id="float-input-email" type="email" size="30" formControlName="user" [(ngModel)]="user" pInputText> 
+                    <label for="float-input-email">usuario</label>
+                </span>
+            </div>
+
+            <div style="padding-top : 10px">
+                <p-message severity="error" text="Este campo es requerido" *ngIf="!form.controls['user'].valid&&form.controls['user'].dirty"></p-message>
+            </div>
+
+
+
+
+            <div style="padding-top : 20px">
+                <span class="ui-float-label">
+                    <input id="float-input" type="password" size="30" (keydown)="handleKeyDown($event)" formControlName="password" [(ngModel)]="password" pInputText> 
+                    <label for="float-input">Contraseña</label>
+                </span>
+            </div>
+            <div style="padding-top : 10px">
+                <p-message severity="error" text="Este campo es requerido" *ngIf="!form.controls['password'].valid&&form.controls['password'].dirty"></p-message>
+            </div>
+
+
+            <div style="padding-top : 25px; padding-bottom : 25px;">
+                <button pButton type="button" label="Entrar" (click)="onLogin();" class="ui-button-rounded " style="margin-right: .25em" [disabled]="form.invalid"></button>
+            </div>
+
+        </form>
+
+    </p-panel>
+</div>
+
+<footer>
+    <p style="color: #00A6FF; text-align: center;">SIISWEB versión 1.1</p>
+    <p style="color: #00A6FF; text-align: center;">&copy; Siellano SAS {{anio}}</p>
+</footer>
