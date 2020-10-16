@@ -4,6 +4,7 @@ import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { VehiculosModule } from './vehiculos/vehiculos.module';
+import { UsersComponent } from './users/users.component';
 
 
 
@@ -11,6 +12,7 @@ const routes: Routes = [
   {
     path: '', component: PagesComponent, children: [
       {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
+      {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
       {path: 'incidentes', loadChildren: () => import('./bomberos/bomberos.module').then(m => m.BomberosModule)},
       {path: 'ambulancias', loadChildren: () => import('./ambulancias/ambulancias.module').then(m => m.AmbulanciasModule)},
       {path: 'personal', loadChildren: () => import('./personal/personal.module').then(m => m.PersonalModule)},

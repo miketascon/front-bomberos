@@ -26,6 +26,9 @@ export class ComplementariosComponent implements OnInit {
 
 
     this.bomberosService.findCasoByID(this.id).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       // tslint:disable-next-line:new-parens
       this.incidente = new Incidentes;
       this.incidente.fecha = data[0].fecha;
@@ -59,7 +62,10 @@ export class ComplementariosComponent implements OnInit {
   guardar() {
 
    this.bomberosService.updateBomberos(this.id, this.incidente).subscribe(data => {
-     this.messages(data);
+    if (data.message === 'Token no válido') {
+      this.authService.logoutUser();
+    }
+    this.messages(data);
 
    });
   }

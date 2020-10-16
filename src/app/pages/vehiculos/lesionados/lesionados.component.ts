@@ -106,6 +106,9 @@ export class LesionadosComponent implements OnInit {
 
 
     this.bomberosService.findCasoByID(this.id).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       // tslint:disable-next-line:new-parens
       this.incidente = new Incidentes;
       this.incidente.fecha = data[0].fecha;
@@ -136,9 +139,12 @@ export class LesionadosComponent implements OnInit {
 
     this.lesionadosService.findByID(this.id).subscribe(
       data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
-        console.log(data);
+
 
       }
     );
@@ -167,17 +173,20 @@ export class LesionadosComponent implements OnInit {
     if (this.newvehiculo) {
 
       this.lesionado.idUser = this.authService.getCurrentUser()._id;
-      console.log(this.lesionado);
+
 
 
       this.lesionadosService.create(this.lesionado).subscribe( data => {
-        console.log(data);
+
         this.messages(data);
       });
        // cars.push(this.car);
     } else {
       this.lesionadosService.updateLesionados(this.selectedlesionados._id, this.lesionado).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
      //   cars[this.cars.indexOf(this.selectedCar)] = this.car;
@@ -195,7 +204,10 @@ export class LesionadosComponent implements OnInit {
     //  this.vehiculo = this.vehiculo.filter((val, i) => i !== index);
 
       this.lesionadosService.deleteLesionados(this.selectedlesionados._id).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
       this.lesionado = null;
@@ -234,6 +246,9 @@ export class LesionadosComponent implements OnInit {
 
       this.lesionadosService.findByID(this.id).subscribe(
         data => {
+          if (data.message === 'Token no válido') {
+            this.authService.logoutUser();
+          }
 
           this.datalist(JSON.stringify(data));
 
@@ -245,6 +260,9 @@ export class LesionadosComponent implements OnInit {
       'Success Message', detail: message});
 
       this.lesionadosService.findByID(this.id).subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
       });
@@ -255,9 +273,17 @@ export class LesionadosComponent implements OnInit {
       'Success Message', detail: message});
 
       this.lesionadosService.findByID(this.id).subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
       });
+
+    }  else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
 
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
@@ -277,7 +303,7 @@ export class LesionadosComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'lesionados');

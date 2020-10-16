@@ -39,4 +39,7 @@ personalRecibe: any;
 formatoDiligenciado: any;
   length: number;
 // formatoDiligenciado: any;
+err;
+message;
+ok;
 }

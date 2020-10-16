@@ -67,9 +67,11 @@ export class BomberoslistComponent implements OnInit {
       { field: 'zona', header: 'Zona' },
   ];
     this.bomberosService.find().subscribe(data => {
-    this.data(JSON.stringify(data));
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
+      this.data(JSON.stringify(data));
 
-    console.log(data);
    });
   }
 
@@ -80,7 +82,7 @@ export class BomberoslistComponent implements OnInit {
 
   data(data) {
     this.casos = JSON.parse(data);
-    console.log(this.casos);
+
    }
   onRowSelect(event) {
 
@@ -95,8 +97,12 @@ export class BomberoslistComponent implements OnInit {
   delete(bombero: Bomberos) {
     this.bomberosService.deleteBomberos(bombero._id).subscribe(data => {
 
-     console.log(data);
-     this.messages(data);
+      if (data.err.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
+
+
+      this.messages(data);
     });
   }
 
@@ -142,13 +148,19 @@ export class BomberoslistComponent implements OnInit {
       'Success Message', detail: message});
 
       this.bomberosService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
 
         this.data(JSON.stringify(data));
-        // console.log(JSON.stringify(data));
-        //  this.usuarios = [JSON.stringify(data)];
-        //  console.log(this.usuarios);
+
       });
+    } else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
+
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
       'Error Message', detail: 'El caso no se pudo eliminar'});
@@ -167,7 +179,7 @@ export class BomberoslistComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'casos');

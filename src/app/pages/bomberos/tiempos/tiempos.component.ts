@@ -43,6 +43,9 @@ export class TiemposComponent implements OnInit {
   ngOnInit(): void {
 
     this.bomberosService.findCasoByID(this.id).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       // tslint:disable-next-line:new-parens
       this.incidente = new Incidentes;
       this.incidente.fecha = data[0].fecha;
@@ -73,7 +76,10 @@ export class TiemposComponent implements OnInit {
     filterSingle(event) {
       const query = event.query;
       this.ambulanciaService.find().subscribe(datos => {
-          this.filteredAmbulanciaSingle = this.filter(query, datos);
+        if (datos.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+        this.filteredAmbulanciaSingle = this.filter(query, datos);
       });
   }
 
@@ -151,6 +157,9 @@ export class TiemposComponent implements OnInit {
 
 
     this.bomberosService.updateBomberos(this.id, this.incidente).subscribe(data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       this.messages(data);
       console.log(data);
     });

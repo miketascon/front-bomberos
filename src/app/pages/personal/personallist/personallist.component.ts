@@ -43,9 +43,12 @@ export class PersonallistComponent implements OnInit {
     ];
 
     this.personalService.find().subscribe(data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       this.data(JSON.stringify(data));
 
-      console.log(data);
+
     });
   }
 
@@ -60,7 +63,7 @@ export class PersonallistComponent implements OnInit {
 
   data(data) {
     this.personales = JSON.parse(data);
-    console.log(this.personales);
+
    }
 
    save() {
@@ -73,17 +76,23 @@ export class PersonallistComponent implements OnInit {
     if (this.newpersonal) {
 
       this.personal.idUser = this.authService.getCurrentUser()._id;
-      console.log(this.personal);
+
 
 
       this.personalService.create(this.personal).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
        // cars.push(this.car);
     } else {
       this.personalService.updatepersonal(this.selectedPersonal._id, this.personal).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
      //   cars[this.cars.indexOf(this.selectedCar)] = this.car;
@@ -100,7 +109,10 @@ export class PersonallistComponent implements OnInit {
     //  this.Personal = this.Personal.filter((val, i) => i !== index);
 
       this.personalService.deletePersonal(this.selectedPersonal._id).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
       this.personal = null;
@@ -140,9 +152,7 @@ export class PersonallistComponent implements OnInit {
       this.personalService.find().subscribe(data => {
 
         this.data(JSON.stringify(data));
-        // console.log(JSON.stringify(data));
-        //  this.usuarios = [JSON.stringify(data)];
-        //  console.log(this.usuarios);
+
       });
     } else if (message === 'Personal eliminado')  {
 
@@ -150,6 +160,9 @@ export class PersonallistComponent implements OnInit {
       'Success Message', detail: message});
 
       this.personalService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.data(JSON.stringify(data));
       });
@@ -160,9 +173,17 @@ export class PersonallistComponent implements OnInit {
       'Success Message', detail: message});
 
       this.personalService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.data(JSON.stringify(data));
       });
+
+    }  else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
 
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
@@ -182,7 +203,7 @@ export class PersonallistComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'personal');

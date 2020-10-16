@@ -21,4 +21,8 @@ export class Accidentes {
     public observaciones: string;
 
 
+    err;
+    message;
+    ok;
+
 }

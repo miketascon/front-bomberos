@@ -13,4 +13,7 @@ export class Personal {
     public fechaCreacion: string;
     public fechaModificacion: string;
     public completo: string;
+    err;
+    message;
+    ok;
 }

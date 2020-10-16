@@ -4,6 +4,10 @@
             <div class="nav">
 
                 <div class="sb-sidenav-menu-heading">Inicio</div>
+                <a class="nav-link collapsed" *ngIf="authService.getCurrentUser().role === 'ADMIN_ROLE'" routerLink="/pages/users/">
+                    <div class="sb-nav-link-icon"><i class="fa fa-user"></i></div>
+                    Usuarios
+                </a>
                 <a class="nav-link collapsed" routerLink="/pages/incidentes/lista">
                     <div class="sb-nav-link-icon"><i class="fa fa-user-times"></i></div>
                     Incidentes

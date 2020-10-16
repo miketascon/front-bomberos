@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Auth } from '../../app/app.configuracion';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Config } from '../../app/app.configuracion';
 import { Observable } from 'rxjs';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
 import { Data } from '../models/Data';
 import { User } from '../models/users';
+import { Session } from '../models/sessions';
 
 
 export interface UserInterface {
@@ -22,6 +23,7 @@ export interface UserInterface {
   firma: any;
   logotipo: string;
   rol: any;
+  message: any;
   // success: any;
   // messages: any;
 
@@ -32,38 +34,15 @@ export interface UserInterface {
 })
 export class AuthService {
 
-  constructor(public http: HttpClient,  private router: Router) { }
 
-  login(user, password): Observable<User> {
-    return this.http.post<User>(`${Auth.URLC}users/login/`, {user, password });
-  }
+  constructor(public http: HttpClient,  private router: Router) {
 
-  find(): Observable<User> {
-    const secret = 'SiellanoUser';
-    return this.http.post<User>(`${Auth.URLC}users`, {secret} );
-  }
-
-  findUser(entidad): Observable<User> {
-    console.log(entidad);
-    return this.http.post<User>(`${Auth.URLC}users/findUserEntidad`, {entidad} );
-  }
-
-  findByUserId(id): Observable<User>  {
-   return this.http.get<User>(`${Auth.URLC}users/findByUserId/` + id );
-  }
-
-  loginModules(token): Observable<User>  {
-    return this.http.post<User>(`${Auth.URLC}users/loginModules/`, {token} );
    }
 
-
-  findId(id) {
-    return this.http.get(`${Auth.URLC}users/` + id);
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(`${Config.URL}usuarios/login/`, {email, password });
   }
 
-  findIduser(id): Observable<User> {
-    return this.http.get<User>(`${Auth.URLC}users/` + id);
-  }
 
   setUser(user: User): void {
     // tslint:disable-next-line:variable-name
@@ -83,6 +62,7 @@ export class AuthService {
   getCurrentUser(): User {
     // tslint:disable-next-line:variable-name
     const user_string = localStorage.getItem('currentUser');
+    // tslint:disable-next-line: deprecation
     if (!isNullOrUndefined(user_string)) {
       const user: User = JSON.parse(user_string);
       return user;
@@ -92,23 +72,17 @@ export class AuthService {
   }
 
   logoutUser() {
-    // tslint:disable-next-line:new-parens
-   // return this.http.post(`${Configuracion.URL}users/sessionUpdate/` , {session});
     localStorage.removeItem('accessToken');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('currentIp');
     localStorage.removeItem('currentOS');
     localStorage.removeItem('currentBrowser');
-    // return this.http.post<UserInterface>(url_api, { headers: this.headers });
-    // const url_api = `http://localhost:3000/api/Users/logout?access_token=${accessToken}`;
+    window.location.reload();
   }
 
-  updatePassword(id, password, nick): Observable<Data> {
-    return this.http.put<Data>(`${Auth.URLC}users/updatePassword/` + id, { password, nick });
+
+  saveSession(session: Session): Observable<Data> {
+    return this.http.post<Data>(`${Config.URL}usuarios/session/`, {session});
   }
 
-  verpass(nick, password): Observable<UserInterface> {
-    return this.http.post<UserInterface>(`${Auth.URLC}users/verpass/`,
-     {nick, password});
-  }
 }

@@ -16,4 +16,7 @@ export class Tiempos {
     public retorno: string;
     public maniobra: string;
     public totalMinutos: string;
+    err;
+    message;
+    ok;
 }

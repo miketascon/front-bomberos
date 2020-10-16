@@ -18,5 +18,8 @@ export class Vehiculos {
     public nombres: string;
     public apellidos: string;
     public observaciones: string;
+    err;
+    message;
+    ok;
 
 }

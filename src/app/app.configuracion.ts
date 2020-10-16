@@ -4,7 +4,7 @@ export class Config {
 }
 
 
-export class Auth {
+/* export class Auth {
     public static get URLC(): string { return 'http://localhost:4020/'; }
     public static get URLWEBC(): string { return 'http://localhost:4020/'; }
-}
+} */

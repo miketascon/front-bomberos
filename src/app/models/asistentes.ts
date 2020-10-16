@@ -9,4 +9,7 @@ export class Asistentes {
     public nombres: string;
     public apellidos: string;
     public rango: string;
+    err;
+    message;
+    ok;
 }

@@ -10,4 +10,8 @@ export class Acuartelados {
     public apellidos: string;
     public rango: string;
 
+    err;
+    message;
+    ok;
+
 }

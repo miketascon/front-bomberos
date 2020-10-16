@@ -6,6 +6,7 @@ import { AmbulanciasService } from '../../../services/ambulancias.service';
 import { Ambulancias } from '../../../models/ambulancias';
 import { Table } from 'primeng/table/';
 import { ExcelExportService } from 'src/app/services/excel-export.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-lista',
@@ -26,7 +27,7 @@ export class ListaComponent implements OnInit {
   casosFilter: any[];
 
   constructor(private router: Router, private messageService: MessageService, public ambulanciasService: AmbulanciasService,
-              public excelexport: ExcelExportService) { }
+              public excelexport: ExcelExportService, public authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -38,9 +39,10 @@ export class ListaComponent implements OnInit {
     ];
 
     this.ambulanciasService.find().subscribe(data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       this.data(JSON.stringify(data));
-
-      console.log(data);
     });
   }
 
@@ -55,7 +57,7 @@ export class ListaComponent implements OnInit {
 
   data(data) {
     this.ambulancias = JSON.parse(data);
-    console.log(this.ambulancias);
+
    }
 
    save() {
@@ -63,13 +65,19 @@ export class ListaComponent implements OnInit {
     if (this.newAmbulancia) {
 
       this.ambulanciasService.create(this.ambulancia).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
        // cars.push(this.car);
     } else {
       this.ambulanciasService.updateAmbulancias(this.selectedAmbulancias._id, this.ambulancia).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
      //   cars[this.cars.indexOf(this.selectedCar)] = this.car;
@@ -86,7 +94,10 @@ export class ListaComponent implements OnInit {
     //  this.ambulancias = this.ambulancias.filter((val, i) => i !== index);
 
       this.ambulanciasService.deleteAmbulancias(this.selectedAmbulancias._id).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
       this.ambulancia = null;
@@ -124,11 +135,12 @@ export class ListaComponent implements OnInit {
       'Success Message', detail: message});
 
       this.ambulanciasService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.data(JSON.stringify(data));
-        // console.log(JSON.stringify(data));
-        //  this.usuarios = [JSON.stringify(data)];
-        //  console.log(this.usuarios);
+
       });
     } else if (message === 'Ambulancia eliminada')  {
 
@@ -136,6 +148,9 @@ export class ListaComponent implements OnInit {
       'Success Message', detail: message});
 
       this.ambulanciasService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.data(JSON.stringify(data));
       });
@@ -146,9 +161,17 @@ export class ListaComponent implements OnInit {
       'Success Message', detail: message});
 
       this.ambulanciasService.find().subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.data(JSON.stringify(data));
       });
+
+    } else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
 
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
@@ -168,7 +191,7 @@ export class ListaComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'ambulancias');

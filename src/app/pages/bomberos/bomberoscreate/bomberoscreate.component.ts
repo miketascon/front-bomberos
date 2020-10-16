@@ -31,7 +31,7 @@ export class BomberoscreateComponent implements OnInit {
     // tslint:disable-next-line:new-parens
     this.incidente = new Incidentes;
     this.incidente.idUser = this.authService.getCurrentUser()._id;
-    this.incidente.guardiaTurno = this.authService.getCurrentUser().rol;
+    this.incidente.guardiaTurno = this.authService.getCurrentUser().role;
     this.incidente.nombresGuardia = this.authService.getCurrentUser().nom;
     this.incidente.apellidosGuardia = this.authService.getCurrentUser().ape;
     this.fecha = new Date();
@@ -56,13 +56,16 @@ export class BomberoscreateComponent implements OnInit {
     this.incidente.hora = horaReporte;
 
 
-    console.log(this.incidente);
+
 
     if (this.incidente) {
       this.incidenteService.create(this.incidente).subscribe( data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
         this.messages(data);
        // this.router.navigate(['informe']);
-        console.log(data);
+
       }, error => {
           console.error('Error storing item', error);
         });

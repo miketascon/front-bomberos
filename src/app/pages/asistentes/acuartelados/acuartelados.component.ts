@@ -66,11 +66,17 @@ export class AcuarteladosComponent implements OnInit {
 
 
     this.personalService.find().subscribe(data => {
-     this.dataAsistente(data);
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
+      this.dataAsistente(data);
     });
 
 
     this.bomberosService.findCasoByID(this.id).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       // tslint:disable-next-line:new-parens
       this.incidente = new Incidentes;
       this.incidente.fecha = data[0].fecha;
@@ -101,6 +107,9 @@ export class AcuarteladosComponent implements OnInit {
 
     this.acuarteladosService.findByID(this.id).subscribe(
       data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
 
@@ -131,7 +140,7 @@ export class AcuarteladosComponent implements OnInit {
 
   data(data) {
     this.acuartelados = JSON.parse(data);
-    console.log(this.acuartelados);
+
    }
 
   cambiarAsistente() {
@@ -153,17 +162,23 @@ export class AcuarteladosComponent implements OnInit {
     if (this.newpersonal) {
 
       this.personal.idUser = this.authService.getCurrentUser()._id;
-      console.log(this.personal);
+
 
 
       this.acuarteladosService.create(this.personal).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
        // cars.push(this.car);
     } else {
       this.acuarteladosService.updateAcuartelados(this.selectedPersonal._id, this.personal).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
      //   cars[this.cars.indexOf(this.selectedCar)] = this.car;
@@ -180,7 +195,10 @@ export class AcuarteladosComponent implements OnInit {
     //  this.Personal = this.Personal.filter((val, i) => i !== index);
 
       this.acuarteladosService.deleteAcuartelados(this.selectedPersonal._id).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
       this.personal = null;
@@ -219,6 +237,9 @@ export class AcuarteladosComponent implements OnInit {
 
       this.acuarteladosService.findByID(this.id).subscribe(
         data => {
+          if (data.message === 'Token no válido') {
+            this.authService.logoutUser();
+          }
 
           this.datalist(JSON.stringify(data));
 
@@ -231,6 +252,9 @@ export class AcuarteladosComponent implements OnInit {
 
       this.acuarteladosService.findByID(this.id).subscribe(
         data => {
+          if (data.message === 'Token no válido') {
+            this.authService.logoutUser();
+          }
 
           this.datalist(JSON.stringify(data));
 
@@ -244,11 +268,19 @@ export class AcuarteladosComponent implements OnInit {
 
       this.acuarteladosService.findByID(this.id).subscribe(
         data => {
+          if (data.message === 'Token no válido') {
+            this.authService.logoutUser();
+          }
 
           this.datalist(JSON.stringify(data));
 
         }
       );
+
+    }  else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
 
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
@@ -268,7 +300,7 @@ export class AcuarteladosComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'acuartelados');

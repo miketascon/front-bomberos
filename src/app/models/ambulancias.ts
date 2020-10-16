@@ -8,5 +8,8 @@ export class Ambulancias {
     public maquina: string;
     public tipo: string;
     public placa?: string;
+    err;
+    message;
+    ok;
 
 }

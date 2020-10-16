@@ -8,4 +8,7 @@ export class Complementarios {
     public procedimiento: string;
     public observaciones: string;
     public otrasEntidades: string;
+    err;
+    message;
+    ok;
 }

@@ -40,4 +40,8 @@ export class Incidentes {
     public observaciones: string;
     public otrasEntidades: string;
 
+
+    public err: any;
+    public message: string;
+    public ok: any;
 }

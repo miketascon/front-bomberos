@@ -72,6 +72,9 @@ export class BomberosupdateComponent implements OnInit {
   guardar() {
 
     this.bomberosService.updateBomberos(this.id, this.incidente).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       this.messages(data);
     });
 

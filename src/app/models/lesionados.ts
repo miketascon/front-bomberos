@@ -26,5 +26,8 @@ export class Lesionados {
     public hallado: string;
     public diagnostico: string;
     public traslado: string;
+    err;
+    message;
+    ok;
 
 }

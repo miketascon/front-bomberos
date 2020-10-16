@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,7 +10,7 @@ export class SidebarComponent implements OnInit {
 
   anio;
 
-  constructor() {
+  constructor(public authService: AuthService) {
     this.anio = new Date().getFullYear();
    }
 

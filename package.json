@@ -36,6 +36,7 @@
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "moments": "0.0.2",
+    "ngx-device-detector": "^2.0.0",
     "nodemon": "^2.0.4",
     "popper.js": "^1.16.1",
     "primeicons": "^3.0.0",

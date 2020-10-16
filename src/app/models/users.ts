@@ -17,15 +17,21 @@ export class User {
     // tslint:disable-next-line:variable-name
     fecha_creacion: any;
     genero: any;
-    rol: any;
+    role: any;
     roles: any[];
     ciudad: any;
     entidad: any;
     iduser: any;
     pordefecto: any;
 
+    nombre;
+    message;
+    success;
+    token;
+
     create;
     update;
     delete;
     read;
+    activo: boolean;
 }

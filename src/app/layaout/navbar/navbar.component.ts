@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
 import { MessageService} from 'primeng/api';
+import { UsuarioService } from '../../services/usuarios.service';
 
 declare var $;
 
@@ -24,6 +25,7 @@ export class NavbarComponent implements OnInit {
   entidad;
 
   constructor(public authService: AuthService,
+              public usuariosService: UsuarioService,
               private router: Router,
               private confirmationService: ConfirmationService,
               public messageServices: MessageService) {
@@ -39,7 +41,7 @@ export class NavbarComponent implements OnInit {
   }
 
   confirm() {
-    console.log('prueba');
+
     this.confirmationService.confirm({
       message: '¿Esta seguro de cerrar la sesión?',
       accept: () => {
@@ -57,19 +59,16 @@ export class NavbarComponent implements OnInit {
 
 
   updatePassword() {
-    console.log(this.actualpass);
-    console.log(this.nuevapass);
-    console.log(this.nuevapass);
 
   //  this.msgs.push({severity:'info', summary:'Info Message', detail:'PrimeNG rocks'});
     if (this.nuevapass != null || this.actualpass != null || this.confirmarpass != null) {
-      this.authService.verpass(this.authService.getCurrentUser().nick, this.actualpass).subscribe(datos => {
-        console.log(datos);
+      this.usuariosService.verpass(this.authService.getCurrentUser().nick, this.actualpass).subscribe(datos => {
+
         if (datos[0].message === 'contraseña validad') {
           if (this.nuevapass === this.confirmarpass) {
               // tslint:disable-next-line:max-line-length
-              this.authService.updatePassword(this.authService.getCurrentUser()._id, this.confirmarpass, this.authService.getCurrentUser().nick).subscribe(data => {
-                console.log(data);
+              this.usuariosService.updatePassword(this.authService.getCurrentUser()._id, this.confirmarpass, this.authService.getCurrentUser().nick).subscribe(data => {
+
 
                 this.actualpass = null;
                 this.nuevapass = null;

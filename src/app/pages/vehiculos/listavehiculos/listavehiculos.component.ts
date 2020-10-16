@@ -112,6 +112,9 @@ export class ListavehiculosComponent implements OnInit {
 
 
     this.bomberosService.findCasoByID(this.id).subscribe( data => {
+      if (data.message === 'Token no válido') {
+        this.authService.logoutUser();
+      }
       // tslint:disable-next-line:new-parens
       this.incidente = new Incidentes;
       this.incidente.fecha = data[0].fecha;
@@ -142,6 +145,9 @@ export class ListavehiculosComponent implements OnInit {
 
     this.vehiculosService.findByID(this.id).subscribe(
       data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
 
@@ -179,17 +185,23 @@ export class ListavehiculosComponent implements OnInit {
     if (this.newvehiculo) {
 
       this.vehiculo.idUser = this.authService.getCurrentUser()._id;
-      console.log(this.vehiculo);
+
 
 
       this.vehiculosService.create(this.vehiculo).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
        // cars.push(this.car);
     } else {
       this.vehiculosService.updateVehiculos(this.selectedVehiculos._id, this.vehiculo).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
      //   cars[this.cars.indexOf(this.selectedCar)] = this.car;
@@ -208,7 +220,10 @@ export class ListavehiculosComponent implements OnInit {
     //  this.vehiculo = this.vehiculo.filter((val, i) => i !== index);
 
       this.vehiculosService.deleteVehiculos(this.selectedVehiculos._id).subscribe( data => {
-        console.log(data);
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
+
         this.messages(data);
       });
       this.vehiculo = null;
@@ -247,6 +262,9 @@ export class ListavehiculosComponent implements OnInit {
 
       this.vehiculosService.findByID(this.id).subscribe(
         data => {
+          if (data.message === 'Token no válido') {
+            this.authService.logoutUser();
+          }
 
           this.datalist(JSON.stringify(data));
 
@@ -258,6 +276,9 @@ export class ListavehiculosComponent implements OnInit {
       'Success Message', detail: message});
 
       this.vehiculosService.findByID(this.id).subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
       });
@@ -268,9 +289,17 @@ export class ListavehiculosComponent implements OnInit {
       'Success Message', detail: message});
 
       this.vehiculosService.findByID(this.id).subscribe(data => {
+        if (data.message === 'Token no válido') {
+          this.authService.logoutUser();
+        }
 
         this.datalist(JSON.stringify(data));
       });
+
+    }  else if (message === 'El usuario no es administrador')  {
+
+      this.messageService.add({key: 'tl', severity: 'error', summary:
+      'Success Message', detail: message});
 
     } else {
       this.messageService.add({key: 'tl', severity: 'error', summary:
@@ -290,7 +319,7 @@ export class ListavehiculosComponent implements OnInit {
     } else {
       const header: any[] = [];
       e.filteredValue.forEach((c) => { header.push(e.filteredValue[c]); });
-     // console.log(header);
+
       this.casosFilter = e.filteredValue;
     }
     this.excelexport.exportAsExcelFile(this.casosFilter, 'vehiculos');
