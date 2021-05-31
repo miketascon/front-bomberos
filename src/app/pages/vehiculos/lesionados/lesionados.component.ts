@@ -85,7 +85,7 @@ export class LesionadosComponent implements OnInit {
     this.halladoResp = [
       {label: 'SELECCIONAR', value: null},
       {label: 'VIVO', value: 'VIVO'},
-      {label: 'MUERTO', value: 'MUERTO'}
+      {label: 'SIN SIGNOS VITALES', value: 'SIN SIGNOS VITALES'}
     ];
 
     this.tipoDoc = [

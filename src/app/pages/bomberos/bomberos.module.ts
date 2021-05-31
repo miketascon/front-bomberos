@@ -23,6 +23,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ComplementariosComponent } from './complementarios/complementarios.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
+import {DropdownModule} from 'primeng/dropdown';
+
+
 
 
 
@@ -44,7 +47,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MessagesModule,
     CalendarModule,
     AutoCompleteModule,
-    InputTextareaModule
+    InputTextareaModule,
+    DropdownModule
 
 
 

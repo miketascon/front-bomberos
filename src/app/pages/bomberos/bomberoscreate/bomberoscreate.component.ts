@@ -19,6 +19,8 @@ export class BomberoscreateComponent implements OnInit {
   incidente: Incidentes;
   fecha: any;
   hora: any;
+  incidentesTipos: any[] = [];
+  zona: any[] = [];
 
   constructor(public authService: AuthService,
               public incidenteService: BomberosService,
@@ -37,6 +39,18 @@ export class BomberoscreateComponent implements OnInit {
     this.fecha = new Date();
     this.hora = new Date();
 
+    this.incidentesTipos = [
+      { label: 'Seleccionar', value: null},
+      { label: 'Accidente de transito', value: 'Accidente de transito'},
+      { label: 'Persona lesionada', value: 'Persona lesionada'},
+      { label: 'Persona delicada de salud', value: 'Persona delicada de salud'},
+    ];
+
+    this.zona = [
+      { label: 'Seleccionar', value: null},
+      { label: 'Urbana', value: 'Urbana'},
+      { label: 'Rural', value: 'Rural'},
+    ];
   }
 
 

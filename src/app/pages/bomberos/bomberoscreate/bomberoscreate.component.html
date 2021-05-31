@@ -25,16 +25,10 @@
 
             <div class="ui-g-12">
                 <div class="ui-g-3">
-                    <label for="tipoLlamada">Tipo de llamado:</label>
-                </div>
-                <div class="ui-g-3">
-                    <input pInputText id="tipoLlamada" [(ngModel)]="incidente.tipoLlamada" maxlength="100" autofocus />
-                </div>
-                <div class="ui-g-3">
                     <label for="tipoIncidente">Tipo de incidente:</label>
                 </div>
-                <div class="ui-g-3">
-                    <input pInputText id="tipoIncidente" [(ngModel)]="incidente.tipoIncidente" maxlength="100" autofocus />
+                <div class="ui-g-6">
+                    <p-dropdown [options]="incidentesTipos" [(ngModel)]="incidente.tipoIncidente"></p-dropdown>
                 </div>
             </div>
 
@@ -58,7 +52,7 @@
                     <label for="zona">Zona:</label>
                 </div>
                 <div class="ui-g-3">
-                    <input pInputText id="zona" [(ngModel)]="incidente.zona" maxlength="100" autofocus />
+                    <p-dropdown [options]="zona" [(ngModel)]="incidente.zona"></p-dropdown>
                 </div>
 
             </div>
